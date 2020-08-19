@@ -1,15 +1,23 @@
+from rest_framework import status
+from rest_framework.response import Response
 from django.shortcuts import render
 from rest_framework.decorators import api_view
-from rest_framework.response import Response
+import requests
+import json
 
 # Create your views here.
 
 
 @api_view(['POST'])
 def login(request):
-    # authServer로 요청 보내기!
 
-    # Serialize로 리턴 데이터 만들기
+    try:
+        body_data = json.loads(request.body)
+        print(body_data)
+    except Exception as e:
+        pass
 
-    # 리턴
-    return Response(status=status.HTTP_200_OK)
+    #response = requests.POST('http://example.com')
+       
+    content = {'please move along': 'nothing to see here'}
+    return Response(content, status=status.HTTP_200_OK)
