@@ -10,14 +10,13 @@ import json
 @api_view(['POST'])
 def login(request):
 
-    try:
-        body_data = json.loads(request.body)
-        print(body_data) # 값 리턴 
+    body_data = json.loads(request.body)
+    print(body_data)
 
-    except Exception as e:
-        pass
+    data = json.dumps(body_data)
 
-    response = requests.post(settings.AUTH_SERVER_LOGIN, data=body_data)
-    print(response)
-    content = {'please move along': 'nothing to see here'}
-    return Response(content, status=response.status_code)
+    response = requests.post(url = settings.AUTH_SERVER_LOGIN, data=data, headers = {"content-type": "application/json"} )
+    print(json.loads(response.content))
+
+
+    return Response(json.loads(response.content), status=response.status_code)
