@@ -26,3 +26,9 @@ def authenticate(request):
     requests.get(url = settings.AUTH_SERVER_AUTHENTICATE, headers = request.headers)
     
     return Response()
+
+@api_view(['GET'])
+def logout(request):
+    requests.delete(url = settings.AUTH_SERVER_LOGOUT)
+    
+    return Response()
