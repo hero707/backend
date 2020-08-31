@@ -25,4 +25,4 @@ def login(request):
 def authenticate(request):
     requests.get(url = settings.AUTH_SERVER_AUTHENTICATE, headers = request.headers)
     
-    return Response() 
+    return Response()
