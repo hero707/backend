@@ -23,8 +23,6 @@ def login(request):
 
 @api_view(['GET'])
 def authenticate(request):
-    #requests.get(url = settings.AUTH_SERVER_AUTHENTICATE, headers = request.headers)
-
     requests.get(url = settings.AUTH_SERVER_AUTHENTICATE, headers = request.headers)
     
     return Response() 
