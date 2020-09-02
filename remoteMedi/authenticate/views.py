@@ -27,8 +27,10 @@ def authenticate(request):
     
     return Response()
 
-@api_view(['GET'])
+
+@api_view(['DELETE'])
 def logout(request):
-    requests.delete(url = settings.AUTH_SERVER_LOGOUT)
+  
+    requests.delete(url = settings.AUTH_SERVER_LOGOUT, data = request.body, headers = {"content-type": "application/json"} )
     
-    return Response()
+    return Response() 
