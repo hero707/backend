@@ -14,17 +14,17 @@ def login(request):
 
 @api_view(['GET'])
 def authenticate(request):
-    requests.get(url = settings.AUTH_SERVER_AUTHENTICATE, headers = request.headers)    
-    return Response()
+    response = requests.get(url = settings.AUTH_SERVER_AUTHENTICATE, headers = request.headers)    
+    return Response(status=response.status_code)
 
 
 @api_view(['DELETE'])
 def logout(request):
-    requests.delete(url = settings.AUTH_SERVER_LOGOUT, data = request.body, headers = {"content-type": "application/json"} )    
-    return Response() 
+    response = requests.delete(url = settings.AUTH_SERVER_LOGOUT, data = request.body, headers = {"content-type": "application/json"} )    
+    return Response(json.loads(response.content), status=response.status_code))
 
 
 @api_view(['POST'])
 def token(request):
     response = requests.post(url = settings.AUTH_SERVER_TOKEN, data = request.body, headers = {"content-type": "application/json"} )    
-    return Response(response.content), status=response.status_code)
+    return Response(json.loads(response.content), status=response.status_code)
