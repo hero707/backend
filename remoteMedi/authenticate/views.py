@@ -21,7 +21,7 @@ def authenticate(request):
 @api_view(['DELETE'])
 def logout(request):
     response = requests.delete(url = settings.AUTH_SERVER_LOGOUT, data = request.body, headers = {"content-type": "application/json"} )    
-    return Response(json.loads(response.content), status=response.status_code))
+    return Response(json.loads(response.content), status=response.status_code)
 
 
 @api_view(['POST'])
