@@ -8,29 +8,23 @@ import json
 
 @api_view(['POST'])
 def login(request):
-
-    body_data = json.loads(request.body)
-    print(body_data)
-
-    data = json.dumps(body_data)
-
-    response = requests.post(url = settings.AUTH_SERVER_LOGIN, data=data, headers = {"content-type": "application/json"} )
-    print(json.loads(response.content))
-
-
+    response = requests.post(url = settings.AUTH_SERVER_LOGIN, data=request.body, headers = {"content-type": "application/json"} )
     return Response(json.loads(response.content), status=response.status_code)
 
 
 @api_view(['GET'])
 def authenticate(request):
-    requests.get(url = settings.AUTH_SERVER_AUTHENTICATE, headers = request.headers)
-    
+    requests.get(url = settings.AUTH_SERVER_AUTHENTICATE, headers = request.headers)    
     return Response()
 
 
 @api_view(['DELETE'])
 def logout(request):
-  
-    requests.delete(url = settings.AUTH_SERVER_LOGOUT, data = request.body, headers = {"content-type": "application/json"} )
-    
+    requests.delete(url = settings.AUTH_SERVER_LOGOUT, data = request.body, headers = {"content-type": "application/json"} )    
     return Response() 
+
+
+@api_view(['POST'])
+def token(request):
+    response = requests.post(url = settings.AUTH_SERVER_TOKEN, data = request.body, headers = {"content-type": "application/json"} )    
+    return Response(response.content), status=response.status_code)
