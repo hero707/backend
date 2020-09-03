@@ -10,20 +10,22 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
-from pathlib import Path
 
+from dotenv import load_dotenv
+from pathlib import Path
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
-
+load_dotenv()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'y4u#qd$bqdcvs#_3+8!(m8k7@qaln&8ehdp=it5%79hjntl5!j'
-
+SECRET_KEY = os.getenv('SECRET_KEY')
+KAKAO_API = os.getenv('KAKAO_API')
 # SECURITY WARNING: don't run with debug turned on in production!
-
+print(KAKAO_API)
 
 # Application definition
 
