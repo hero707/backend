@@ -11,12 +11,16 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 
-from dotenv import load_dotenv
 from pathlib import Path
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
-load_dotenv()
+
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except:
+    pass
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -25,7 +29,6 @@ load_dotenv()
 SECRET_KEY = os.getenv('SECRET_KEY')
 KAKAO_API = os.getenv('KAKAO_API')
 # SECURITY WARNING: don't run with debug turned on in production!
-print(KAKAO_API)
 
 # Application definition
 
