@@ -39,8 +39,10 @@ jobs:
         pip install -r requirements.txt
         pip install pytest-django
     - name: Run migrations
-      env: # Or as an environment variable
+      env:
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
       run: python remoteMedi/manage.py migrate --settings=remoteMedi.settings.prod
     - name: Run tests
+      env:
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
       run: python remoteMedi/manage.py test remoteMedi/ --settings=remoteMedi.settings.prod
