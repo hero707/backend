@@ -1,4 +1,4 @@
-name: main backend CI/CD
+name: django CI
 
 on:
   pull_request:
@@ -27,16 +27,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Set up Python 3.7
+    - name: Set up Python 3.6
       uses: actions/setup-python@v1
       with:
-        python-version: 3.7
+        python-version: 3.6
     - name: psycopg2 prerequisites
       run: sudo apt-get install python-dev libpq-dev
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        pip install -r remoteMedi/requirements.txt
         pip install pytest-django
     - name: Run migrations
       env:
