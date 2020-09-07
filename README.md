@@ -13,3 +13,8 @@ virtualenv
 3. virtualenv 설치
 4. virtualenv 생성
 5. pip install requirements.txt
+
+
+## deploy
+
+zappa update dev
