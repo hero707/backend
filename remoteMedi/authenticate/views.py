@@ -33,17 +33,16 @@ def token(request):
 
 @api_view(['GET'])
 def kakaologin(request):
+    print(settings.HOST)
     client_id = settings.KAKAO_API
-    redirect_uri = "http://127.0.0.1:8000/authenticate/kakaoauth"
+    redirect_uri = f"{settings.HOST}/authenticate/kakao/auth"
 
     return redirect(f"https://kauth.kakao.com/oauth/authorize?client_id={client_id}&redirect_uri={redirect_uri}&response_type=code")
-    
 
-@api_view(['GET'])
 def kakaoauth(request):
     code = request.GET['code']
     client_id = settings.KAKAO_API
-    redirect_uri = "http://127.0.0.1:8000/authenticate/kakaoauth"
+    redirect_uri = f"{settings.HOST}/authenticate/kakao/auth"
     access_token_request_uri = "https://kauth.kakao.com/oauth/token?grant_type=authorization_code&"
     client_secret = settings.KAKAO_SECRET
 
@@ -61,7 +60,6 @@ def kakaoauth(request):
     return Response(token_request.json())
     
     
-
 @api_view(['POST'])
 def kakaologout(request):
     client_id = settings.KAKAO_API
@@ -70,7 +68,6 @@ def kakaologout(request):
     print(Authorization)
     logout_url = "https://kapi.kakao.com/v1/user/logout"
 
-    
     logout_id = requests.post(url=logout_url, headers = Authorization)
     print(json.loads(logout_id.content))
     return Response(json.loads(logout_id.content) , status = logout_id.status_code)
