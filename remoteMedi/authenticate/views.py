@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from django.http import JsonResponse
 from django.shortcuts import redirect
 import requests
 from django.conf import settings
@@ -12,7 +13,6 @@ import json
 
 @api_view(['GET'])
 def kakaologin(request):
-    print(settings.HOST)
     client_id = settings.KAKAO_API
     redirect_uri = f"{settings.HOST}/authenticate/kakao/auth"
 
@@ -33,10 +33,7 @@ def kakaoauth(request):
     print(access_token_request_uri)
     token_request = requests.get(access_token_request_uri)
 
-    #if token_request.status_code == 200:
-    print(token_request.json())
-
-    return Response(token_request.json())
+    return JsonResponse(token_request.json(), status=200)
     
     
 
@@ -51,4 +48,4 @@ def kakaologout(request):
     
     logout_id = requests.post(url=logout_url, headers = Authorization)
     print(json.loads(logout_id.content))
-    return Response(json.loads(logout_id.content) , status = logout_id.status_code)
+    return Response(json.loads(logout_id.content) , status=logout_id.status_code)
