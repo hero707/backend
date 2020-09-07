@@ -9,27 +9,19 @@ import json
 # Create your views here.
 
 
-@api_view(['POST'])
-def login(request):
-    # authServer로 요청 보내기!
-
-    # Serialize로 리턴 데이터 만들기
-
-    # 리턴
-    return Response(status=status.HTTP_200_OK)
-
-def kakaologin(request):
-    client_id = settings.KAKAO_API
-    redirect_uri = "http://127.0.0.1:8000/authenticate/kakaoauth"
-
-    return redirect(f"https://kauth.kakao.com/oauth/authorize?client_id={client_id}&redirect_uri={redirect_uri}&response_type=code")
-    
 
 @api_view(['GET'])
+def kakaologin(request):
+    print(settings.HOST)
+    client_id = settings.KAKAO_API
+    redirect_uri = f"{settings.HOST}/authenticate/kakao/auth"
+
+    return redirect(f"https://kauth.kakao.com/oauth/authorize?client_id={client_id}&redirect_uri={redirect_uri}&response_type=code")
+
 def kakaoauth(request):
     code = request.GET['code']
     client_id = settings.KAKAO_API
-    redirect_uri = "http://127.0.0.1:8000/authenticate/kakaoauth"
+    redirect_uri = f"{settings.HOST}/authenticate/kakao/auth"
     access_token_request_uri = "https://kauth.kakao.com/oauth/token?grant_type=authorization_code&"
     client_secret = settings.KAKAO_SECRET
 

@@ -2,6 +2,7 @@ from .base import *
 import os
 
 DEBUG = False
+HOST = os.getenv('AWS_HOST')
 INSTALLED_APPS += ['django_s3_storage']
 S3_BUCKET = "zappa-sv7emz4ut"
 STATICFILES_STORAGE = "django_s3_storage.storage.StaticS3Storage"

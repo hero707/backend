@@ -1,13 +1,11 @@
 from django.urls import path
-from .views import login
 from .views import kakaologin
 from .views import kakaoauth
 from .views import kakaologout
 
 
 urlpatterns = [
-    path('login/', login),
-    path('kakaoauth/', kakaoauth),
-    path('kakaologin/', kakaologin),
-    path('kakaologout/', kakaologout),
+    path('kakao/auth/', kakaoauth),
+    path('kakao/login/', kakaologin),
+    path('kakao/logout/', kakaologout),
 ]
