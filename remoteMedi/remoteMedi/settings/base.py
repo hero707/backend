@@ -10,20 +10,26 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
-from pathlib import Path
 
+from pathlib import Path
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except:
+    pass
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'y4u#qd$bqdcvs#_3+8!(m8k7@qaln&8ehdp=it5%79hjntl5!j'
-
+SECRET_KEY = os.getenv('SECRET_KEY')
+KAKAO_API = os.getenv('KAKAO_API')
+KAKAO_SECRET = os.getenv('KAKAO_SECRET')
 # SECURITY WARNING: don't run with debug turned on in production!
-
 
 # Application definition
 
@@ -37,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_yasg',
     'authenticate',
+    'healthcheck'
 ]
 
 REST_FRAMEWORK = {
@@ -76,12 +83,7 @@ WSGI_APPLICATION = 'remoteMedi.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+
 
 
 # Password validation
@@ -115,7 +117,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
