@@ -1,3 +1,4 @@
+from rest_framework import status
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -8,16 +9,29 @@ import json
 
 # Create your views here.
 
-
 @api_view(['POST'])
 def login(request):
-    # authServer로 요청 보내기!
+    response = requests.post(url = settings.AUTH_SERVER_LOGIN, data=request.body, headers = {"content-type": "application/json"} )
+    return Response(json.loads(response.content), status=response.status_code)
 
-    # Serialize로 리턴 데이터 만들기
 
-    # 리턴
-    return Response(status=status.HTTP_200_OK)
+@api_view(['GET'])
+def authenticate(request):
+    response = requests.get(url = settings.AUTH_SERVER_AUTHENTICATE, headers = request.headers)    
+    return Response(status=response.status_code)
 
+@api_view(['DELETE'])
+def logout(request):
+    response = requests.delete(url = settings.AUTH_SERVER_LOGOUT, data = request.body, headers = {"content-type": "application/json"} )    
+    return Response(json.loads(response.content), status=response.status_code)
+
+
+@api_view(['POST'])
+def token(request):
+    response = requests.post(url = settings.AUTH_SERVER_TOKEN, data = request.body, headers = {"content-type": "application/json"} )    
+    return Response(json.loads(response.content), status=response.status_code)
+
+@api_view(['GET'])
 def kakaologin(request):
     client_id = settings.KAKAO_API
     redirect_uri = "http://127.0.0.1:8000/authenticate/kakaoauth"
