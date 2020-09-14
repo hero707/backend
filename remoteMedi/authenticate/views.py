@@ -79,7 +79,7 @@ def kakaologin(request):
     client_id = settings.KAKAO_API
     redirect_uri = "http://127.0.0.1:8000/authenticate/kakaoauth"
 
-    return redirect(f"https://kauth.kakao.com/oauth/authorize?client_id={client_id}&redirect_uri={redirect_uri}&response_type=code")
+    return redirect(f"https://kauth.kakao.com/oauth/authorize?client_id={client_id}&redirect_uri={redirect_uri}&response_type=code&scope=talk_message")
     
 
 @api_view(['GET'])
@@ -94,6 +94,7 @@ def kakaoauth(request):
     access_token_request_uri += "&redirect_uri=" + redirect_uri
     access_token_request_uri += "&code=" + code
     access_token_request_uri += "&client_secret=" + client_secret
+    access_token_request_uri += "&scope=talk_message"
 
     print(access_token_request_uri)
     token_request = requests.get(access_token_request_uri)
@@ -117,3 +118,34 @@ def kakaologout(request):
     logout_id = requests.post(url=logout_url, headers = Authorization)
     print(json.loads(logout_id.content))
     return Response(json.loads(logout_id.content) , status = logout_id.status_code)
+
+
+
+@api_view(['POST'])
+def kakaosendmsg(request):
+    client_id = settings.KAKAO_API
+    Authorization = request.headers.get('Authorization')
+    print(Authorization)
+    
+    print("============raw body========")
+    print(request.body)
+
+    print("============load body==========")
+    print(json.loads(request.body))
+
+    print("=============load -> dump body")
+    print(type(json.dumps(json.loads(request.body))))
+    data = {
+        "template_object" : json.dumps(json.loads(request.body))
+    }
+    
+    headers = {
+        'Content-Type': "application/x-www-form-urlencoded",
+        'Authorization':Authorization
+        }
+    send_url = "https://kapi.kakao.com/v2/api/talk/memo/default/send"
+    result = requests.post(url=send_url, headers = headers, data = data)
+
+    return Response(result)
+
+
