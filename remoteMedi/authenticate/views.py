@@ -34,9 +34,10 @@ def token(request):
 
 @api_view(['GET'])
 def kakaologin(request):
+    print("let start!")
     client_id = settings.KAKAO_API
     redirect_uri = f"{settings.HOST}/authenticate/kakao/auth"
-
+    print(f"https://kauth.kakao.com/oauth/authorize?client_id={client_id}&redirect_uri={redirect_uri}&response_type=code")
     return redirect(f"https://kauth.kakao.com/oauth/authorize?client_id={client_id}&redirect_uri={redirect_uri}&response_type=code")
 
 def kakaoauth(request):
@@ -51,8 +52,18 @@ def kakaoauth(request):
     access_token_request_uri += "&code=" + code
     access_token_request_uri += "&client_secret=" + client_secret
 
-    print(access_token_request_uri)
-    token_request = requests.get(access_token_request_uri)
+    try:
+        print("call naver")
+        token_request = requests.get('https://www.naver.com')
+        print(token_request)
+        print('call kakao with token')
+        token_request = requests.get(access_token_request_uri)
+        print(token_request)
+    except Exception as e:
+        print('error occured')
+        print(e)
+        return JsonResponse({"custom message" : "failed"}, status=500)
+        
 
     return JsonResponse(token_request.json(), status=200)
     
@@ -68,3 +79,8 @@ def kakaologout(request):
     logout_id = requests.post(url=logout_url, headers = Authorization)
     print(json.loads(logout_id.content))
     return Response(json.loads(logout_id.content) , status=logout_id.status_code)
+
+
+@api_view(['GET'])
+def redirect_test(request):
+    return redirect("https://www.naver.com")

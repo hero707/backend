@@ -1,7 +1,7 @@
 from .base import *
 
 DEBUG=True
-HOST = "http://127.0.0.1:8000"
+HOST = "http://127.0.0.1:10637"
 ALLOWED_HOSTS = ["*"]
 
 AUTH_SERVER_LOGIN = ROOT_SERVER + "/login"

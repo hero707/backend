@@ -2,14 +2,14 @@ from .base import *
 import os
 
 DEBUG = False
-HOST = os.getenv('AWS_HOST')
+HOST = os.getenv('HOST')
 INSTALLED_APPS += ['django_s3_storage']
 S3_BUCKET = "zappa-sv7emz4ut"
 STATICFILES_STORAGE = "django_s3_storage.storage.StaticS3Storage"
 AWS_S3_BUCKET_NAME_STATIC = S3_BUCKET
 STATIC_URL = "https://%s.s3.amazonaws.com/" % S3_BUCKET
 
-ALLOWED_HOSTS = ["127.0.0.1", "vjbw52tg5f.execute-api.us-east-2.amazonaws.com"]
+ALLOWED_HOSTS = ["127.0.0.1", "vjbw52tg5f.execute-api.us-east-2.amazonaws.com", "kauth.kakao.com"]
 if os.getenv("GITHUB_WORKFLOW"):
    DATABASES = {
         'default': {
