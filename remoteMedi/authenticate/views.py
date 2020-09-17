@@ -66,9 +66,38 @@ def kakaologout(request):
     logout_url = "https://kapi.kakao.com/v1/user/logout"
 
     logout_id = requests.post(url=logout_url, headers = Authorization)
+
     return Response(json.loads(logout_id.content) , status=logout_id.status_code)
 
 
 @api_view(['GET'])
 def redirect_test(request):
     return redirect("https://www.naver.com")
+
+@api_view(['POST'])
+def kakaosendmsg(request):
+    client_id = settings.KAKAO_API
+    Authorization = request.headers.get('Authorization')
+    print(Authorization)
+    
+    print("============raw body========")
+    print(request.body)
+
+    print("============load body==========")
+    print(json.loads(request.body))
+
+    print("=============load -> dump body")
+    print(type(json.dumps(json.loads(request.body))))
+    data = {
+        "template_object" : json.dumps(json.loads(request.body))
+    }
+    
+    headers = {
+        'Content-Type': "application/x-www-form-urlencoded",
+        'Authorization':Authorization
+        }
+    send_url = "https://kapi.kakao.com/v2/api/talk/memo/default/send"
+    result = requests.post(url=send_url, headers = headers, data = data)
+
+    return Response(result)
+
