@@ -14,7 +14,12 @@ AUTH_SERVER_TOKEN = ROOT_SERVER + "/token"
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.getenv('DB_NAME'), # dbname
+        'USER': os.getenv('MYSQL_ID'), # master username
+        'PASSWORD': os.getenv('MYSQL_PW'), # master password
+        'HOST': os.getenv('MYSQL_IP'), # Endpoint
+        'PORT': os.getenv('MYSQL_PORT'),
+        'OPTIONS': {'charset': 'utf8mb4'},
     }
 }
