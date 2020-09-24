@@ -53,10 +53,14 @@ def kakaoauth(request):
     try:
         token_request = requests.get(access_token_request_uri)
     except Exception as e:
-        return JsonResponse({"custom message" : "failed"}, status=500)
+        return JsonResponse({"message" : "failed"}, status=500)
         
-
-    return JsonResponse(token_request.json(), status=200)
+    res = JsonResponse({"message" : "ok"}, status=200)
+    token_json = token_request.json();
+    res.set_cookie('access_token', token_json['access_token'], httponly=True)
+    res.set_cookie('refresh_token',token_json['refresh_token'], httponly=True)
+    
+    return res; 
     
     
 @api_view(['POST'])
