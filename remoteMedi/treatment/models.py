@@ -24,6 +24,7 @@ class WaitingRoom(models.Model):
     objects = models.Manager()
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     major = models.ForeignKey(Major, on_delete=models.CASCADE)
+    room_number = models.TextField(default='',max_length = 32)   
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
